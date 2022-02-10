@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weather_application/settings.dart';
-import 'package:weather_application/weather.dart';
-import 'package:weather_application/map.dart';
+import 'package:weather_application/screens/settings.dart';
+import 'package:weather_application/screens/weatherList.dart';
+import 'package:weather_application/screens/map.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -30,7 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           body: TabBarView(
             children: [
-              Weather(),
+              const WeatherList(),
               Map(),
               Setting(),
             ],

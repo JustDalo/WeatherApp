@@ -12,6 +12,7 @@ class Map extends StatefulWidget {
 class MapState extends State<Map> {
   Completer<GoogleMapController> _controller = Completer();
 
+
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
@@ -25,6 +26,7 @@ class MapState extends State<Map> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: GoogleMap(
         initialCameraPosition: _kGooglePlex,
@@ -32,6 +34,7 @@ class MapState extends State<Map> {
           _controller.complete(controller);
         },
       ),
+
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _goToTheLake,
         label: Text('To the lake!'),
@@ -44,5 +47,12 @@ class MapState extends State<Map> {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
+
+
+
+  void _addMarkers(List<LatLng> pos) {
+
+  }
+
 
 }

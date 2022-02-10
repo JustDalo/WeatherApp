@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:weather_application/map.dart';
-import 'package:weather_application/splash.dart';
+import 'package:weather_application/screens/map.dart';
+import 'package:weather_application/screens/splashScreen.dart';
 
 void main() {
   runApp(const MyApp());
