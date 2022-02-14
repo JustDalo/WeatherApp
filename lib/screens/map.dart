@@ -2,27 +2,23 @@ import 'dart:convert';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:weather_application/model/locationMarker.dart';
 
 import '../dao/WeatherDAO.dart';
 
 class Map extends StatefulWidget {
+  const Map({Key? key}) : super(key: key);
+
   @override
   State<Map> createState() => MapState();
 }
 
-class MapState extends State<Map> {
-  Completer<GoogleMapController> _controller = Completer();
+class MapState extends State<Map> with AutomaticKeepAliveClientMixin{
+  final Completer<GoogleMapController> _controller = Completer();
   List<LocationMarker> location = <LocationMarker>[];
-  Set<Marker> markerSet = <Marker>{};
 
   Iterable markers = [];
-
-  MarkerId? selectedMarker;
-  int _markerIdCounter = 1;
-  LatLng? markerPosition;
 
   void getWeather() async {
     await WeatherDAO.getWeather().then((response) {
@@ -33,11 +29,13 @@ class MapState extends State<Map> {
     });
 
     Iterable _markers = Iterable.generate(location.length, (index) {
-
       LatLng latLngMarker = LatLng(location[index].lat, location[index].lon);
 
-      return Marker(markerId: MarkerId("marker$index"), infoWindow: InfoWindow(title: location[index].description),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed), position: latLngMarker);
+      return Marker(
+          markerId: MarkerId("marker$index"),
+          infoWindow: InfoWindow(title: location[index].description),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+          position: latLngMarker);
     });
     setState(() {
       markers = _markers;
@@ -70,14 +68,8 @@ class MapState extends State<Map> {
     );
   }
 
-  Marker _addMarker(LocationMarker location) {
-
-    return Marker(
-      markerId: MarkerId(location.description),
-      infoWindow: InfoWindow(title: location.description),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-      position: LatLng(location.lat, location.lon),
-    );
-  }
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
 

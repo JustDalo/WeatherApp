@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:provider/provider.dart';
+
+import 'package:weather_application/controls/fontSizeController.dart';
 
 import 'package:flutter/material.dart';
 import 'package:weather_application/model/weather.dart';
@@ -11,7 +14,7 @@ class WeatherList extends StatefulWidget {
   _WeatherListState createState() => _WeatherListState();
 }
 
-class _WeatherListState extends State<WeatherList> {
+class _WeatherListState extends State<WeatherList> with AutomaticKeepAliveClientMixin {
   List<Weather> weatherList = <Weather>[];
 
   void getWeather() async {
@@ -35,11 +38,21 @@ class _WeatherListState extends State<WeatherList> {
         body: ListView.builder(
             itemCount: weatherList.length,
             itemBuilder: (context, index) {
-              return Card(
-                  child: Text(weatherList[index].city +
-                      ',' +
-                      weatherList[index].lat.toString()));
+              return ListTile(
+                title: Text(weatherList[index].city,
+                    style: TextStyle(
+                        fontSize: Provider.of<FontSizeController>(context,
+                                listen: true)
+                            .value)),
+                subtitle: Text(weatherList[index].lat.toString() +
+                    ', ' +
+                    weatherList[index].lon.toString()),
+              );
             }));
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
 //child: Text(weatherList[index].base + ',' + weatherList[index].country),
