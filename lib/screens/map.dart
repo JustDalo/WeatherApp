@@ -14,7 +14,7 @@ class Map extends StatefulWidget {
   State<Map> createState() => MapState();
 }
 
-class MapState extends State<Map> with AutomaticKeepAliveClientMixin{
+class MapState extends State<Map> with AutomaticKeepAliveClientMixin {
   final Completer<GoogleMapController> _controller = Completer();
   List<LocationMarker> location = <LocationMarker>[];
 
@@ -33,7 +33,16 @@ class MapState extends State<Map> with AutomaticKeepAliveClientMixin{
 
       return Marker(
           markerId: MarkerId("marker$index"),
-          infoWindow: InfoWindow(title: location[index].description),
+          infoWindow: InfoWindow(
+              title: location[index].city +
+                  ' (' +
+                  location[index].lat.toString() +
+                  ', ' +
+                  location[index].lon.toString() +
+                  ') ',
+              snippet: location[index].temperature.toString() +
+                  "F, " +
+                  location[index].description),
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
           position: latLngMarker);
     });
@@ -72,4 +81,3 @@ class MapState extends State<Map> with AutomaticKeepAliveClientMixin{
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }
-

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_application/controls/fontColorController.dart';
 import 'package:weather_application/controls/fontSizeController.dart';
 import 'package:weather_application/screens/map.dart';
 import 'package:weather_application/screens/splashScreen.dart';
@@ -14,8 +15,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (context) => FontSizeController(),
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => FontSizeController()),
+          ChangeNotifierProvider(create: (context) => FontColorController())
+        ],
         child: MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(

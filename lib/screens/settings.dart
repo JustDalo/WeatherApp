@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_application/controls/fontColorController.dart';
 
 import 'package:weather_application/controls/fontSizeController.dart';
 
@@ -21,14 +22,26 @@ class _SettingWidgetState extends State<Setting> {
               style: TextStyle(
                   fontSize:
                       Provider.of<FontSizeController>(context, listen: true)
-                          .value)),
+                          .value,
+                  color: Provider.of<FontColorController>(context, listen: true)
+                      .value)),
         ),
-        buildFontSize(),
+        _buildFontSize(),
+        ListTile(
+          title: Text("Font color",
+              style: TextStyle(
+                  fontSize:
+                      Provider.of<FontSizeController>(context, listen: true)
+                          .value,
+                  color: Provider.of<FontColorController>(context, listen: true)
+                      .value)),
+        ),
+        _buildFontColor(),
       ],
     ));
   }
 
-  Widget buildFontSize() => Slider(
+  Widget _buildFontSize() => Slider(
         value: Provider.of<FontSizeController>(context, listen: true).value,
         max: 20,
         min: 10,
@@ -42,25 +55,19 @@ class _SettingWidgetState extends State<Setting> {
               .changeFontSize(value);
         },
       );
-}
 
-// child: Text(
-// "Change type size: ",
-// style: TextStyle(fontSize: Provider
-//     .of<FontSizeController>(context, listen: true)
-// .value),
-//
-// Slider(
-// value: _currentSliderValue,
-// max: 20,
-// min: 10,
-// divisions: 1,
-// label: _currentSliderValue.round().toString(),
-// onChanged: (double value) {
-// setState(() {
-// _currentSliderValue = value;
-// });
-// Provider.of<FontSizeController>(context, listen: false)
-//     .changeFontSize(value);
-// },
-// ),
+  Widget _buildFontColor() => DropdownButton<String>(
+        value: 'Black',
+        onChanged: (String? value) {
+          Provider.of<FontColorController>(context, listen: false)
+              .changeFontColor(value!);
+        },
+        items: <String>['Black', 'Red']
+            .map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+      );
+}

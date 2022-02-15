@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 
+import 'package:weather_application/controls/fontColorController.dart';
 import 'package:weather_application/controls/fontSizeController.dart';
 
-import 'package:flutter/material.dart';
 import 'package:weather_application/model/weather.dart';
 import 'package:weather_application/dao/weatherDAO.dart';
+
+import 'package:weather_application/screens/map.dart';
 
 class WeatherList extends StatefulWidget {
   const WeatherList({Key? key}) : super(key: key);
@@ -14,7 +17,8 @@ class WeatherList extends StatefulWidget {
   _WeatherListState createState() => _WeatherListState();
 }
 
-class _WeatherListState extends State<WeatherList> with AutomaticKeepAliveClientMixin {
+class _WeatherListState extends State<WeatherList>
+    with AutomaticKeepAliveClientMixin {
   List<Weather> weatherList = <Weather>[];
 
   void getWeather() async {
@@ -39,15 +43,19 @@ class _WeatherListState extends State<WeatherList> with AutomaticKeepAliveClient
             itemCount: weatherList.length,
             itemBuilder: (context, index) {
               return ListTile(
-                title: Text(weatherList[index].city,
-                    style: TextStyle(
+                  title: Text(weatherList[index].city,
+                      style: TextStyle(
                         fontSize: Provider.of<FontSizeController>(context,
                                 listen: true)
-                            .value)),
-                subtitle: Text(weatherList[index].lat.toString() +
-                    ', ' +
-                    weatherList[index].lon.toString()),
-              );
+                            .value,
+                      )),
+                  subtitle: Text(weatherList[index].lat.toString() +
+                      ', ' +
+                      weatherList[index].lon.toString()),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const Map()));
+                  });
             }));
   }
 
@@ -55,4 +63,3 @@ class _WeatherListState extends State<WeatherList> with AutomaticKeepAliveClient
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }
-//child: Text(weatherList[index].base + ',' + weatherList[index].country),
