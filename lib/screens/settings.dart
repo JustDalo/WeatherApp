@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_application/controls/fontColorController.dart';
@@ -25,6 +26,7 @@ class _SettingWidgetState extends State<Setting> {
                           .value,
                   color: Provider.of<FontColorController>(context, listen: true)
                       .value)),
+          tileColor: Colors.grey,
         ),
         _buildFontSize(),
         ListTile(
@@ -35,29 +37,34 @@ class _SettingWidgetState extends State<Setting> {
                           .value,
                   color: Provider.of<FontColorController>(context, listen: true)
                       .value)),
+          tileColor: Colors.grey,
         ),
         _buildFontColor(),
       ],
     ));
   }
 
-  Widget _buildFontSize() => Slider(
+  Widget _buildFontSize() => Container(
+    width: double.maxFinite,
+      child: CupertinoSlider(
         value: Provider.of<FontSizeController>(context, listen: true).value,
         max: 20,
         min: 10,
         divisions: 5,
-        label: Provider.of<FontSizeController>(context, listen: true)
+
+        /*label: Provider.of<FontSizeController>(context, listen: true)
             .value
             .round()
-            .toString(),
+            .toString(),*/
         onChanged: (double value) {
           Provider.of<FontSizeController>(context, listen: false)
               .changeFontSize(value);
         },
-      );
+      ));
 
   Widget _buildFontColor() => DropdownButton<String>(
-        value: 'Black',
+        value: Provider.of<FontColorController>(context, listen: true)
+            .stringValue,
         onChanged: (String? value) {
           Provider.of<FontColorController>(context, listen: false)
               .changeFontColor(value!);

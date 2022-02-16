@@ -20,7 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.black,
-            title: const Text('TabBar'),
+            title: const Text('Weather Forecast'),
             bottom: const TabBar(
               tabs: [
                 Tab(icon: Icon(Icons.ac_unit)),

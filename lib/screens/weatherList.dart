@@ -45,13 +45,28 @@ class _WeatherListState extends State<WeatherList>
               return ListTile(
                   title: Text(weatherList[index].city,
                       style: TextStyle(
-                        fontSize: Provider.of<FontSizeController>(context,
+                          fontSize:
+                              Provider.of<FontSizeController>(context, listen: true)
+                                  .value,
+                          color: Provider.of<FontColorController>(context, listen: true)
+                              .value)),
+                  subtitle: Text(
+                      weatherList[index].lat.toString() +
+                          ', ' +
+                          weatherList[index].lon.toString(),
+                      style: TextStyle(
+                          color:
+                              Provider.of<FontColorController>(context, listen: true)
+                                  .value)),
+                  leading: Image.network(
+                      'http://openweathermap.org/img/wn/${weatherList[index].weatherIcon}@2x.png'),
+                  trailing: Text(
+                    weatherList[index].temperature.toString(),
+                    style: TextStyle(
+                        color: Provider.of<FontColorController>(context,
                                 listen: true)
-                            .value,
-                      )),
-                  subtitle: Text(weatherList[index].lat.toString() +
-                      ', ' +
-                      weatherList[index].lon.toString()),
+                            .value),
+                  ),
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => const Map()));
