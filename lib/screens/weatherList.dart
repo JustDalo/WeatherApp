@@ -69,7 +69,7 @@ class _WeatherListState extends State<WeatherList>
                   ),
                   onTap: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const Map()));
+                        MaterialPageRoute(builder: (context) => Map(lat: weatherList[index].lat, lon: weatherList[index].lon)));
                   });
             }));
   }

@@ -32,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
           body: const TabBarView(
             children: [
               WeatherList(),
-              Map(),
+              Map(lat: 53.9024716, lon: 27.5618225),
               Setting(),
             ],
           ),

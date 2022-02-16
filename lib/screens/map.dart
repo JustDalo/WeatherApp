@@ -8,7 +8,9 @@ import 'package:weather_application/model/locationMarker.dart';
 import '../dao/WeatherDAO.dart';
 
 class Map extends StatefulWidget {
-  const Map({Key? key}) : super(key: key);
+  final double lat;
+  final double lon;
+  const Map({Key? key, required this.lat, required this.lon}) : super(key: key);
 
   @override
   State<Map> createState() => MapState();
@@ -69,7 +71,10 @@ class MapState extends State<Map> with AutomaticKeepAliveClientMixin {
         markers: Set.from(
           markers,
         ),
-        initialCameraPosition: _kGooglePlex,
+        initialCameraPosition: CameraPosition(
+          target: LatLng(widget.lat, widget.lon),
+          zoom: 10,
+        ),
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
