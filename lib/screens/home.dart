@@ -12,6 +12,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _selectedIndex = 0;
+
+  static const List<Widget> _widgetOptions = <Widget>[
+    WeatherList(),
+    Map(lat: 53.9024716, lon: 27.5618225),
+    Setting(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,20 +35,22 @@ class _MyHomePageState extends State<MyHomePage> {
           appBar: AppBar(
             backgroundColor: Colors.black,
             title: const Text('Weather Forecast'),
-            bottom: const TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.ac_unit)),
-                Tab(icon: Icon(Icons.location_pin)),
-                Tab(icon: Icon(Icons.settings)),
-              ],
-            ),
           ),
-          body: const TabBarView(
-            children: [
-              WeatherList(),
-              Map(lat: 53.9024716, lon: 27.5618225),
-              Setting(),
+          body: Center(
+            child: _widgetOptions.elementAt(_selectedIndex),
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.ac_unit), label: 'weather'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.location_pin), label: 'map'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.settings), label: 'settings'),
             ],
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+            selectedItemColor: Colors.amber[800],
           ),
         ),
       ),
