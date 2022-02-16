@@ -13,6 +13,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
+  Icon _searchIcon = const Icon(Icons.search);
+  Widget _appBarTitle = const Text("Weather Forecast");
 
   static const List<Widget> _widgetOptions = <Widget>[
     WeatherList(),
@@ -26,6 +28,36 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _onSearchTapped() {
+    setState(() {
+      if (_searchIcon.icon == Icons.search) {
+        _searchIcon = const Icon(Icons.cancel);
+        _appBarTitle = const ListTile(
+            leading: Icon(
+              Icons.search,
+              color: Colors.white,
+              size: 28,
+            ),
+            title: TextField(
+                decoration: InputDecoration(
+                  hintText: 'type in city name...',
+                  hintStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontStyle: FontStyle.italic,
+                  ),
+                  border: InputBorder.none,
+                ),
+                style: TextStyle(
+                  color: Colors.white,
+                )));
+      } else {
+        _searchIcon = const Icon(Icons.search);
+        _appBarTitle = const Text('Weather Forecast');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,9 +65,14 @@ class _MyHomePageState extends State<MyHomePage> {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.black,
-            title: const Text('Weather Forecast'),
-          ),
+              backgroundColor: Colors.black,
+              title: _appBarTitle,
+              actions: [
+                IconButton(
+                  icon: _searchIcon,
+                  onPressed: _onSearchTapped,
+                ),
+              ]),
           body: Center(
             child: _widgetOptions.elementAt(_selectedIndex),
           ),
