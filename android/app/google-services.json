@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "985770518005",
+    "firebase_url": "https://weatherforecast-362c9-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "weatherforecast-362c9",
+    "storage_bucket": "weatherforecast-362c9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985770518005:android:ed0f7842d5c932053cecbc",
+        "android_client_info": {
+          "package_name": "com.example.weather_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "985770518005-mjlb1cpgd5svssvonjuoj313tjcfkl86.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBA_jsk6-6pUnAlEeRov_2Z8H2X4cvJZCc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "985770518005-mjlb1cpgd5svssvonjuoj313tjcfkl86.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "985770518005-9snkvmgmrfoum9bso9lj90tncabb5og9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bsuir.weatherApplication"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

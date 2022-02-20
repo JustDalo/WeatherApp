@@ -5,13 +5,12 @@ import 'package:weather_application/networking/apiExceptions.dart';
 import 'dart:async';
 
 class ApiBaseHelper {
-  final String _baseUrl =
-      "http://api.openweathermap.org/data/2.5/";
+  final String _apiKey = "8d82707fc5578d8279a22549a1ac45ee";
 
-  Future<dynamic> get(String url) async {
-    print('Api Get, url $url');
+  Future<dynamic> get(String city) async {
+
     var responseJson;
-    var apiUrl = Uri.https('api.openweathermap.org', '/data/2.5/weather', {'q': 'London', 'appid' : '8d82707fc5578d8279a22549a1ac45ee'});
+    var apiUrl = Uri.https('api.openweathermap.org', '/data/2.5/weather', {'q': city, 'appid' : _apiKey});
 
 
     try {
@@ -39,7 +38,7 @@ class ApiBaseHelper {
       case 500:
       default:
         throw FetchDataException(
-            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+            'Error occurred while Communication with Server with StatusCode : ${response.statusCode}');
     }
   }
 }

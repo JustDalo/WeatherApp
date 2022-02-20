@@ -1,11 +1,12 @@
 import 'dart:async';
 
-import 'package:weather_application/dao/weatherDAO.dart';
+import 'package:weather_application/dao/DAO.dart';
 import 'package:weather_application/networking/apiResponse.dart';
 import 'package:weather_application/model/weather.dart';
+import 'package:weather_application/repository/WeatherRepository.dart';
 
 class WeatherController {
-  late WeatherDAO _weatherRepository;
+  late WeatherRepository _weatherRepository;
   late StreamController<ApiResponse<List<Weather>>> _weatherListController;
 
   StreamSink<ApiResponse<List<Weather>>> get weatherListSink =>
@@ -16,7 +17,7 @@ class WeatherController {
 
   WeatherController() {
     _weatherListController = StreamController<ApiResponse<List<Weather>>>();
-    _weatherRepository = WeatherDAO();
+    _weatherRepository = WeatherRepository();
     fetchWeatherList();
   }
 

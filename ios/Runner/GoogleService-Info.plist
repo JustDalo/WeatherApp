@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>985770518005-f6tek34qpbn61p07hhfjn2j23ho469i4.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.985770518005-f6tek34qpbn61p07hhfjn2j23ho469i4</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD1gSLur12fymSdPgdFeWLCljj5PJycZ8A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>985770518005</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.bsuir.weather</string>
+	<key>PROJECT_ID</key>
+	<string>weatherforecast-362c9</string>
+	<key>STORAGE_BUCKET</key>
+	<string>weatherforecast-362c9.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:985770518005:ios:c59220017be05cdd3cecbc</string>
+	<key>DATABASE_URL</key>
+	<string>https://weatherforecast-362c9-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>

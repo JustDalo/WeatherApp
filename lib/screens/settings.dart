@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:weather_application/controls/fontColorController.dart';
 
 import 'package:weather_application/controls/fontSizeController.dart';
+import 'package:weather_application/dao/DAO.dart';
+import 'package:weather_application/model/weather.dart';
 
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);
@@ -13,6 +15,7 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingWidgetState extends State<Setting> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

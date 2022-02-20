@@ -4,8 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:weather_application/model/locationMarker.dart';
-
-import '../dao/WeatherDAO.dart';
+import 'package:weather_application/repository/WeatherRepository.dart';
 
 class Map extends StatefulWidget {
   final double lat;
@@ -23,7 +22,7 @@ class MapState extends State<Map> with AutomaticKeepAliveClientMixin {
   Iterable markers = [];
 
   void getWeather() async {
-    await WeatherDAO.getWeather().then((response) {
+    await WeatherRepository.getWeather().then((response) {
       setState(() {
         Iterable list = json.decode(response);
         location = list.map((model) => LocationMarker.fromJson(model)).toList();
