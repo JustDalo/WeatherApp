@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:weather_application/dao/DAO.dart';
-import 'package:weather_application/networking/apiResponse.dart';
-import 'package:weather_application/model/weather.dart';
+import 'package:weather_application/networking/ApiResponse.dart';
+import 'package:weather_application/model/Weather.dart';
 import 'package:weather_application/repository/WeatherRepository.dart';
 
 class WeatherController {

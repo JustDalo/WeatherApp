@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
-import 'package:weather_application/controls/weatherController.dart';
-import 'package:weather_application/dao/DAO.dart';
+import 'package:weather_application/controls/WeatherController.dart';
 
-import 'package:weather_application/model/weather.dart';
-import 'package:weather_application/networking/apiExceptions.dart';
-import 'package:weather_application/networking/apiResponse.dart';
+import 'package:weather_application/model/Weather.dart';
+import 'package:weather_application/networking/ApiResponse.dart';
 import 'package:weather_application/repository/WeatherRepository.dart';
 import 'package:weather_application/screens/weather_list/LoadingPage.dart';
 import 'package:weather_application/screens/weather_list/ErrorPage.dart';
@@ -54,7 +52,6 @@ class _WeatherListState extends State<WeatherPageRoutes>
                       return LoadingPage(loadingMessage: snapshot.data?.message);
 
                     case Status.COMPLETED:
-
                       return WeatherList(weatherList: snapshot.data?.data);
 
                     case Status.ERROR:

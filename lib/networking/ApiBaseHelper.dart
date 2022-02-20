@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:weather_application/networking/apiExceptions.dart';
+import 'package:weather_application/networking/ApiExceptions.dart';
 import 'dart:async';
 
 class ApiBaseHelper {

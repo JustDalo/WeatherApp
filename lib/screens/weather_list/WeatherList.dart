@@ -1,12 +1,12 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-import 'package:weather_application/controls/fontColorController.dart';
-import 'package:weather_application/controls/fontSizeController.dart';
+import 'package:weather_application/controls/FontColorController.dart';
+import 'package:weather_application/controls/FontSizeController.dart';
 
-import 'package:weather_application/model/weather.dart';
+import 'package:weather_application/model/Weather.dart';
 
-import 'package:weather_application/screens/map.dart';
+import 'package:weather_application/screens/GoogleMap.dart';
 
 class WeatherList extends StatefulWidget {
   final List<Weather>? weatherList;

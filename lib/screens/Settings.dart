@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_application/controls/fontColorController.dart';
+import 'package:weather_application/controls/FontColorController.dart';
 
-import 'package:weather_application/controls/fontSizeController.dart';
+import 'package:weather_application/controls/FontSizeController.dart';
 import 'package:weather_application/dao/DAO.dart';
-import 'package:weather_application/model/weather.dart';
+import 'package:weather_application/model/Weather.dart';
 
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);

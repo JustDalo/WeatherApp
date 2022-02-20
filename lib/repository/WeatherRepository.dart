@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/services.dart' show rootBundle;
 
-import 'package:weather_application/networking/apiBaseHelper.dart';
-import 'package:weather_application/model/weather.dart';
+import 'package:weather_application/networking/ApiBaseHelper.dart';
+import 'package:weather_application/model/Weather.dart';
 
 class WeatherRepository {
   final ApiBaseHelper _helper = ApiBaseHelper();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weather_application/screens/settings.dart';
-import 'package:weather_application/screens/map.dart';
+import 'package:weather_application/screens/Settings.dart';
+import 'package:weather_application/screens/GoogleMap.dart';
 import 'package:weather_application/screens/weather_list/WeatherPageRoutes.dart';
 
 class MyHomePage extends StatefulWidget {
