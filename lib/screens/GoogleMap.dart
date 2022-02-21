@@ -26,6 +26,7 @@ class _GoogleMapState extends State<GoogleMapPage>
     with AutomaticKeepAliveClientMixin {
   final Completer<GoogleMapController> _controller = Completer();
   final TextEditingController editingController = TextEditingController();
+  List<Weather> citiesList = <Weather>[];
 
   Iterable markers = [];
 
@@ -60,22 +61,95 @@ class _GoogleMapState extends State<GoogleMapPage>
     _setMarkers();
   }
 
+  void filterSearchResults(String query) {
+    List<Weather> dummySearchList = <Weather>[];
+    dummySearchList.addAll(widget.weatherList!);
+    if (query.isNotEmpty) {
+      List<Weather> dummyListData = <Weather>[];
+      for (var item in dummySearchList) {
+        if (item.city.contains(query)) {
+          dummyListData.add(item);
+        }
+      }
+      setState(() {
+        citiesList.clear();
+        citiesList.addAll(dummyListData);
+      });
+      return;
+    } else {
+      setState(() {
+        citiesList.clear();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
-    return GoogleMap(
-          markers: Set.from(
-            markers,
+    return Scaffold(
+        body: Stack(children: <Widget>[
+      GoogleMap(
+        markers: Set.from(
+          markers,
+        ),
+        initialCameraPosition: CameraPosition(
+          target: LatLng(widget.lat, widget.lon),
+          zoom: 9,
+        ),
+        onMapCreated: (GoogleMapController controller) {
+          _controller.complete(controller);
+        },
+      ),
+      Column(children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
+            onChanged: (value) {
+              filterSearchResults(value);
+            },
+            controller: editingController,
+            decoration: const InputDecoration(
+                labelText: "Search",
+                hintText: "City?..",
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(25.0)))),
           ),
-          initialCameraPosition: CameraPosition(
-            target: LatLng(widget.lat, widget.lon),
-            zoom: 10,
-          ),
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
-        );
+        ),
+        Expanded(
+            child: Padding(
+                padding: const EdgeInsets.only(bottom: 10, left: 8, right: 8),
+                child: ListView.builder(
+                    itemCount: citiesList.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: ListTile(
+                            title: Text(
+                              citiesList[index].city,
+                            ),
+                            tileColor: Colors.red,
+                            onTap: () => _goToTheLake(
+                                citiesList[index].lat, citiesList[index].lon),
+                          ));
+                    }))),
+      ]),
+    ]));
+  }
+
+  Future<void> _goToTheLake(double lat, double lon) async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+      target: LatLng(lat, lon),
+      zoom: 10,
+    )));
   }
 
   @override
