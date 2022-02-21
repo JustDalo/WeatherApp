@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 import 'package:weather_application/controls/FontColorController.dart';
 import 'package:weather_application/controls/FontSizeController.dart';
-import 'package:weather_application/screens/GoogleMap.dart';
 import 'package:weather_application/screens/SplashScreen.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:weather_application/firebase_options.dart';
 
 void main() async {

@@ -12,7 +12,6 @@ class ApiBaseHelper {
     var responseJson;
     var apiUrl = Uri.https('api.openweathermap.org', '/data/2.5/weather', {'q': city, 'appid' : _apiKey});
 
-
     try {
       final response = await http.get(apiUrl);
       responseJson = _returnResponse(response);

@@ -3,47 +3,49 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:weather_application/model/locationMarker.dart';
+import 'package:weather_application/model/Weather.dart';
 import 'package:weather_application/repository/WeatherRepository.dart';
 
-class Map extends StatefulWidget {
+class GoogleMapPage extends StatefulWidget {
   final double lat;
   final double lon;
-  const Map({Key? key, required this.lat, required this.lon}) : super(key: key);
+  final List<Weather>? weatherList;
+
+  const GoogleMapPage(
+      {Key? key,
+      required this.lat,
+      required this.lon,
+      required this.weatherList})
+      : super(key: key);
 
   @override
-  State<Map> createState() => MapState();
+  _GoogleMapState createState() => _GoogleMapState();
 }
 
-class MapState extends State<Map> with AutomaticKeepAliveClientMixin {
+class _GoogleMapState extends State<GoogleMapPage>
+    with AutomaticKeepAliveClientMixin {
   final Completer<GoogleMapController> _controller = Completer();
-  List<LocationMarker> location = <LocationMarker>[];
+  final TextEditingController editingController = TextEditingController();
 
   Iterable markers = [];
 
-  void getWeather() async {
-    await WeatherRepository.getWeather().then((response) {
-      setState(() {
-        Iterable list = json.decode(response);
-        location = list.map((model) => LocationMarker.fromJson(model)).toList();
-      });
-    });
-
-    Iterable _markers = Iterable.generate(location.length, (index) {
-      LatLng latLngMarker = LatLng(location[index].lat, location[index].lon);
+  void _setMarkers() {
+    Iterable _markers = Iterable.generate(widget.weatherList!.length, (index) {
+      LatLng latLngMarker = LatLng(
+          widget.weatherList![index].lat, widget.weatherList![index].lon);
 
       return Marker(
-          markerId: MarkerId("marker$index"),
+          markerId: MarkerId("marker_$index"),
           infoWindow: InfoWindow(
-              title: location[index].city +
+              title: widget.weatherList![index].city +
                   ' (' +
-                  location[index].lat.toString() +
+                  widget.weatherList![index].lat.toString() +
                   ', ' +
-                  location[index].lon.toString() +
+                  widget.weatherList![index].lon.toString() +
                   ') ',
-              snippet: location[index].temperature.toString() +
+              snippet: widget.weatherList![index].temperature.toString() +
                   "F, " +
-                  location[index].description),
+                  widget.weatherList![index].description),
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
           position: latLngMarker);
     });
@@ -55,33 +57,27 @@ class MapState extends State<Map> with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
-    getWeather();
+    _setMarkers();
   }
-
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(53.9024716, 27.5618225),
-    zoom: 10,
-  );
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GoogleMap(
-        markers: Set.from(
-          markers,
-        ),
-        initialCameraPosition: CameraPosition(
-          target: LatLng(widget.lat, widget.lon),
-          zoom: 10,
-        ),
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-      ),
-    );
+    super.build(context);
+
+    return GoogleMap(
+          markers: Set.from(
+            markers,
+          ),
+          initialCameraPosition: CameraPosition(
+            target: LatLng(widget.lat, widget.lon),
+            zoom: 10,
+          ),
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+          },
+        );
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

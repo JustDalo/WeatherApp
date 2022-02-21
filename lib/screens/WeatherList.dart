@@ -83,27 +83,34 @@ class _WeatherListView extends State<WeatherList> {
                     title: Text(items[index].city,
                         style: TextStyle(
                             fontSize:
-                                Provider.of<FontSizeController>(context, listen: true)
-                                    .value,
-                            color: Provider.of<FontColorController>(context, listen: true)
+                            Provider
+                                .of<FontSizeController>(context, listen: true)
+                                .value,
+                            color: Provider
+                                .of<FontColorController>(context, listen: true)
                                 .value)),
                     subtitle: Text(
                         items[index].lat.toString() +
                             ', ' +
                             items[index].lon.toString(),
                         style: TextStyle(
-                            color: Provider.of<FontColorController>(context, listen: true)
+                            color: Provider
+                                .of<FontColorController>(context, listen: true)
                                 .value)),
                     leading: Image.network(
-                        'https://openweathermap.org/img/wn/${items[index].weatherIcon}@2x.png'),
+                        'https://openweathermap.org/img/wn/${items[index]
+                            .weatherIcon}@2x.png'),
                     trailing: const Icon(Icons.arrow_back),
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Map(
+                            builder: (context) =>
+                                GoogleMapPage(
                                   lat: items[index].lat,
-                                  lon: items[index].lon)));
+                                  lon: items[index].lon,
+                                  weatherList: widget.weatherList,),
+                          ));
                     }),
                 background: Container(
                   color: Colors.red,

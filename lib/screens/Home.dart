@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:weather_application/screens/Settings.dart';
 import 'package:weather_application/screens/GoogleMap.dart';
-import 'package:weather_application/screens/weather_list/WeatherPageRoutes.dart';
+import 'package:weather_application/screens/WeatherList.dart';
+import 'package:weather_application/screens/LoadingPage.dart';
+import 'package:weather_application/screens/ErrorPage.dart';
+
+import 'package:weather_application/controls/WeatherController.dart';
+
+import 'package:weather_application/model/Weather.dart';
+import 'package:weather_application/networking/ApiResponse.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -11,15 +18,11 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage>
+    with AutomaticKeepAliveClientMixin {
   int _selectedIndex = 0;
   final Widget _appBarTitle = const Text("Weather Forecast");
-
-  static const List<Widget> _widgetOptions = <Widget>[
-    WeatherPageRoutes(),
-    Map(lat: 53.9024716, lon: 27.5618225),
-    Setting(),
-  ];
+  late WeatherController _controller;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -28,17 +31,55 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _controller = WeatherController();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return MaterialApp(
       home: DefaultTabController(
         length: 3,
         child: Scaffold(
-          appBar: AppBar(
-              backgroundColor: Colors.black,
-              title: _appBarTitle),
-          body: Center(
-            child: _widgetOptions.elementAt(_selectedIndex),
-          ),
+          appBar: AppBar(backgroundColor: Colors.black, title: _appBarTitle),
+          body: RefreshIndicator(
+              onRefresh: () => _controller.fetchWeatherList(),
+              child: StreamBuilder<ApiResponse<List<Weather>>>(
+                stream: _controller.weatherListStream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    switch (snapshot.data?.status) {
+                      case Status.LOADING:
+                        return LoadingPage(
+                            loadingMessage: snapshot.data?.message);
+
+                      case Status.COMPLETED:
+                        if (_selectedIndex == 0) {
+                          return WeatherList(weatherList: snapshot.data?.data);
+                        } else if (_selectedIndex == 1) {
+                          return GoogleMapPage(
+                              lat: 53.902471,
+                              lon: 27.561824,
+                              weatherList: snapshot.data?.data);
+                        } else {
+                          return const Setting();
+                        }
+
+                      case Status.ERROR:
+                        return ErrorPage(
+                          errorMessage: snapshot.data?.message,
+                          onRetryPressed: () => _controller.fetchWeatherList(),
+                        );
+                    }
+                  }
+                  return Container();
+                },
+              )),
+          /*Center(
+            child: _widgetOptions.elementAt(_selectedIndex),*/
+
           bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
@@ -56,4 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
