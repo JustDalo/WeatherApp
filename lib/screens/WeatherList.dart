@@ -37,7 +37,6 @@ class _WeatherListView extends State<WeatherList> {
           dummyListData.add(item);
         }
       }
-
       setState(() {
         items.clear();
         items.addAll(dummyListData);
