@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:weather_application/dao/DAO.dart';
 
 import 'package:weather_application/networking/ApiBaseHelper.dart';
 import 'package:weather_application/model/Weather.dart';

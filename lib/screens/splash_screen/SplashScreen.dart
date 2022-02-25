@@ -1,28 +1,106 @@
 import 'package:flutter/material.dart';
-import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:weather_application/screens/Home.dart';
-import 'package:page_transition/page_transition.dart';
 
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+import 'package:weather_application/screens/splash_screen/HolePainter.dart';
+import 'package:weather_application/screens/splash_screen/StaggeredRaindropAnimation.dart';
+
+class SplashScreen extends StatefulWidget {
+  final Color color;
+
+  const SplashScreen({Key? key, required this.color}) : super(key: key);
+
+  @override
+  _AnimationScreenState createState() => _AnimationScreenState();
+}
+
+class _AnimationScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  Size size = Size.zero;
+  late AnimationController _controller;
+  late StaggeredRaindropAnimation _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 3000),
+      vsync: this,
+    );
+    _animation = StaggeredRaindropAnimation(_controller);
+    _controller.forward();
+
+    _controller.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    setState(() {
+      size = MediaQuery.of(context).size;
+    });
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Column(
-          children: <Widget>[
-            AnimatedSplashScreen(
-              duration: 2000,
-              splash: Icons.accessible_forward_outlined,
-              nextScreen: const MyHomePage(title: 'Home'),
-              splashTransition: SplashTransition.sizeTransition,
-              pageTransitionType: PageTransitionType.bottomToTop,
-            ),
-            const Align(
+    return Stack(children: [
+      SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: CustomPaint(
+              painter: HolePainter(
+                  color: widget.color,
+                  holeSize: _animation.holeSize.value * size.width))),
+      Positioned(
+          top: _animation.dropPosition.value * size.height,
+          left: size.width / 2 - _animation.dropSize.value / 2,
+          child: SizedBox(
+              width: _animation.dropSize.value,
+              height: _animation.dropSize.value,
+              child: CustomPaint(
+                painter: DropPainter(visible: _animation.dropVisible.value),
+              ))),
+      Padding(
+          padding: const EdgeInsets.only(bottom: 32),
+          child: Align(
               alignment: Alignment.bottomCenter,
-              child: Text("Created by Daniil Shyshla"),
-            )
-          ],
-        ));
+              child: Opacity(
+                  opacity: _animation.textOpacity.value,
+                  child: const Text(
+                    " Created by\n"
+                    "Daniil Shyshla",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ))))
+    ]);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+}
+
+class DropPainter extends CustomPainter {
+  DropPainter({this.visible = true});
+
+  bool visible;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (!visible) {
+      return;
+    }
+
+    Path path = Path();
+    path.moveTo(size.width / 2, 0);
+    path.quadraticBezierTo(0, size.height * 0.8, size.width / 2, size.height);
+    path.quadraticBezierTo(size.width, size.height * 0.8, size.width / 2, 0);
+    canvas.drawPath(path, Paint()..color = Colors.white);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
   }
 }

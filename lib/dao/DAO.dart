@@ -21,6 +21,18 @@ class WeatherDAO {
       print(e);
     }
   }
+
+  void getData() {
+    final database = FirebaseDatabase.instance.ref().child("weatherforecast-362c9-default-rtdb").once();
+
+
+    List<String> cities = <String>[];
+
+
+    var variable = databaseReference.key!;
+    print(databaseReference.key!);
+
+  }
   
   void updateData(String city, Weather weatherData) {
     databaseReference.child(city).update({

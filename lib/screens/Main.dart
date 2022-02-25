@@ -4,7 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:weather_application/controls/FontColorController.dart';
 import 'package:weather_application/controls/FontSizeController.dart';
-import 'package:weather_application/screens/SplashScreen.dart';
+import 'package:weather_application/screens/Home.dart';
+import 'package:weather_application/screens/splash_screen/SplashScreen.dart';
 import 'package:weather_application/firebase_options.dart';
 
 void main() async {
@@ -26,11 +27,30 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => FontColorController())
         ],
         child: MaterialApp(
-          title: 'Flutter Demo',
+          title: 'Weather Application',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.amber,
           ),
-          home: SplashScreen(),
+          home: const MyHomePage(),
         ));
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Stack(children: <Widget>[
+      const TabBarPage(),
+      IgnorePointer(
+          child: SplashScreen(color: Theme.of(context).colorScheme.secondary))
+    ]));
   }
 }

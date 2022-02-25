@@ -1,10 +1,9 @@
-import 'dart:convert';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:weather_application/model/Weather.dart';
-import 'package:weather_application/repository/WeatherRepository.dart';
+
 
 class GoogleMapPage extends StatefulWidget {
   final double lat;
@@ -88,60 +87,59 @@ class _GoogleMapState extends State<GoogleMapPage>
     super.build(context);
 
     return Scaffold(
-        body: Stack(children: <Widget>[
-      GoogleMap(
-        markers: Set.from(
-          markers,
-        ),
-        initialCameraPosition: CameraPosition(
-          target: LatLng(widget.lat, widget.lon),
-          zoom: 9,
-        ),
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-      ),
-      Column(children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            onChanged: (value) {
-              filterSearchResults(value);
-            },
-            controller: editingController,
-            decoration: const InputDecoration(
-                labelText: "Search",
-                hintText: "City?..",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(25.0)))),
+      body: Stack(children: <Widget>[
+        GoogleMap(
+          markers: Set.from(
+            markers,
           ),
+          initialCameraPosition: CameraPosition(
+            target: LatLng(widget.lat, widget.lon),
+            zoom: 9,
+          ),
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+          },
         ),
-        Expanded(
-            child: Padding(
-                padding: const EdgeInsets.only(bottom: 10, left: 8, right: 8),
-                child: ListView.builder(
-                    itemCount: citiesList.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(12),
+        Column(children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              onChanged: (value) {
+                filterSearchResults(value);
+              },
+              controller: editingController,
+              decoration: const InputDecoration(
+                  labelText: "Search",
+                  hintText: "City?..",
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(25.0)))),
+            ),
+          ),
+          IgnorePointer(
+              child: ListView.builder(
+                  itemCount: citiesList.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 1,
                           ),
-                          child: ListTile(
-                            title: Text(
-                              citiesList[index].city,
-                            ),
-                            tileColor: Colors.red,
-                            onTap: () => _goToTheLake(
-                                citiesList[index].lat, citiesList[index].lon),
-                          ));
-                    }))),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: ListTile(
+                          title: Text(
+                            citiesList[index].city,
+                          ),
+                          tileColor: Colors.red,
+                          onTap: () => _goToTheLake(
+                              citiesList[index].lat, citiesList[index].lon),
+                        ));
+                  }))
+        ]),
       ]),
-    ]));
+    );
   }
 
   Future<void> _goToTheLake(double lat, double lon) async {

@@ -10,15 +10,14 @@ import 'package:weather_application/controls/WeatherController.dart';
 import 'package:weather_application/model/Weather.dart';
 import 'package:weather_application/networking/ApiResponse.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
+class TabBarPage extends StatefulWidget {
+  const TabBarPage({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _TabBarState createState() => _TabBarState();
 }
 
-class _MyHomePageState extends State<MyHomePage>
+class _TabBarState extends State<TabBarPage>
     with AutomaticKeepAliveClientMixin {
   int _selectedIndex = 0;
   final Widget _appBarTitle = const Text("Weather Forecast");
@@ -91,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage>
             ],
             currentIndex: _selectedIndex,
             onTap: _onItemTapped,
-            selectedItemColor: Colors.amber[800],
+            selectedItemColor: Colors.amber,
           ),
         ),
       ),
