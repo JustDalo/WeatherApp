@@ -18,6 +18,18 @@ class WeatherRepository {
     response = await _helper.get("Minsk");
     weatherResponse.add(Weather.fromJson(response));
 
+    response = await _helper.get("Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch");
+    weatherResponse.add(Weather.fromJson(response));
+
+    response = await _helper.get("Tokyo");
+    weatherResponse.add(Weather.fromJson(response));
+
+    response = await _helper.get("Paris");
+    weatherResponse.add(Weather.fromJson(response));
+
+    response = await _helper.get("Vancouver");
+    weatherResponse.add(Weather.fromJson(response));
+
     return weatherResponse;
   }
 
