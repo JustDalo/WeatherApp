@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -16,10 +17,10 @@ class ApiBaseHelper {
       final response = await http.get(apiUrl);
       responseJson = _returnResponse(response);
     } on SocketException {
-      print('No net');
+      log('No net');
       throw FetchDataException('No Internet connection');
     }
-    print('api get recieved!');
+    log('api get recieved!');
     return responseJson;
   }
 
@@ -27,7 +28,7 @@ class ApiBaseHelper {
     switch (response.statusCode) {
       case 200:
         var responseJson = json.decode(response.body.toString());
-        print(responseJson);
+        log(responseJson);
         return responseJson;
       case 400:
         throw BadRequestException(response.body.toString());

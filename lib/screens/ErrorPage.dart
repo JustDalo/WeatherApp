@@ -27,7 +27,7 @@ class ErrorPage extends StatelessWidget {
             child: const Text(
               'Retry',
             ),
-            onPressed: onRetryPressed(),
+            onPressed: () => onRetryPressed(),
           )
         ],
       ),

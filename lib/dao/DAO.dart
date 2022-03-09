@@ -1,12 +1,11 @@
+import 'dart:developer';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:weather_application/model/Weather.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 
 class WeatherDAO {
-  final databaseReference = FirebaseDatabase.instance.ref();
-
-  //  WeatherDAO weatherDAO = WeatherDAO();
-  // weatherDAO.createRecord("Moscow", snapshot.data?.data[0]);
+  final databaseReference = FirebaseDatabase.instance.ref().child("cities");
 
   void createRecord(String? city, Weather? weatherData) {
     try {
@@ -18,22 +17,14 @@ class WeatherDAO {
         'icon': weatherData.weatherIcon,
       });
     } catch (e) {
-      print(e);
+      log(e.toString());
     }
   }
 
-  void getData() {
-    final database = FirebaseDatabase.instance.ref().child("weatherforecast-362c9-default-rtdb").once();
-
-
-    List<String> cities = <String>[];
-
-  
-    var variable = databaseReference.key!;
-    print(databaseReference.key!);
-
+  Future<DataSnapshot> getData() async {
+    return databaseReference.get();
   }
-  
+
   void updateData(String city, Weather weatherData) {
     databaseReference.child(city).update({
       'temperature': weatherData.temperature,

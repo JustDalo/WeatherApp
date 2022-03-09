@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'dart:developer';
 
-import 'package:weather_application/dao/DAO.dart';
 import 'package:weather_application/networking/ApiResponse.dart';
 import 'package:weather_application/model/Weather.dart';
 import 'package:weather_application/repository/WeatherRepository.dart';
@@ -28,7 +28,7 @@ class WeatherController {
       weatherListSink.add(ApiResponse.completed(weathers));
     } catch (e) {
       weatherListSink.add(ApiResponse.error(e.toString()));
-      print(e);
+      log(e.toString());
     }
   }
 
