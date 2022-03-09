@@ -1,25 +1,30 @@
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'dart:convert';
 import 'package:weather_application/networking/ApiExceptions.dart';
 import 'dart:async';
 
 class ApiBaseHelper {
+  var logger = Logger(
+    printer: PrettyPrinter(),
+  );
+
   final String _apiKey = "8d82707fc5578d8279a22549a1ac45ee";
 
   Future<dynamic> get(String city) async {
-
     var responseJson;
-    var apiUrl = Uri.https('api.openweathermap.org', '/data/2.5/weather', {'q': city, 'appid' : _apiKey});
+    var apiUrl = Uri.https('api.openweathermap.org', '/data/2.5/weather',
+        {'q': city, 'appid': _apiKey});
 
     try {
       final response = await http.get(apiUrl);
       responseJson = _returnResponse(response);
     } on SocketException {
-      print('No net');
+      logger.e('No net');
       throw FetchDataException('No Internet connection');
     }
-    print('api get recieved!');
+    logger.e('api get recieved!');
     return responseJson;
   }
 
@@ -27,7 +32,7 @@ class ApiBaseHelper {
     switch (response.statusCode) {
       case 200:
         var responseJson = json.decode(response.body.toString());
-        print(responseJson);
+        logger.e(responseJson);
         return responseJson;
       case 400:
         throw BadRequestException(response.body.toString());

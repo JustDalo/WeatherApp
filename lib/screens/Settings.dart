@@ -2,11 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_application/controls/FontColorController.dart';
 
+
+import 'package:weather_application/controls/FontColorController.dart';
 import 'package:weather_application/controls/FontSizeController.dart';
-import 'package:weather_application/dao/DAO.dart';
-import 'package:weather_application/model/Weather.dart';
 
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);
@@ -47,7 +46,7 @@ class _SettingWidgetState extends State<Setting> {
     ));
   }
 
-  Widget _buildFontSize() => Container(
+  Widget _buildFontSize() => SizedBox(
       width: double.maxFinite,
       child: CupertinoSlider(
         value: Provider.of<FontSizeController>(context, listen: true).value,
@@ -78,7 +77,6 @@ class _SettingWidgetState extends State<Setting> {
         pickerAreaHeightPercent: 0.7,
         enableAlpha: true,
         displayThumbColor: true,
-        showLabel: true,
         paletteType: PaletteType.hsv,
         pickerAreaBorderRadius: const BorderRadius.only(
           topLeft: Radius.circular(2.0),

@@ -1,10 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/services.dart' show rootBundle;
+
 import 'package:weather_application/dao/DAO.dart';
 import 'package:weather_application/model/City.dart';
-
 import 'package:weather_application/networking/ApiBaseHelper.dart';
 import 'package:weather_application/model/Weather.dart';
 

@@ -1,10 +1,13 @@
-import 'dart:developer';
+import 'package:logger/logger.dart';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:weather_application/model/Weather.dart';
 
-
 class WeatherDAO {
+  var logger = Logger(
+    printer: PrettyPrinter(),
+  );
+
   final databaseReference = FirebaseDatabase.instance.ref().child("cities");
 
   void createRecord(String? city, Weather? weatherData) {
@@ -17,7 +20,7 @@ class WeatherDAO {
         'icon': weatherData.weatherIcon,
       });
     } catch (e) {
-      log(e.toString());
+      logger.e(e.toString());
     }
   }
 
@@ -26,14 +29,22 @@ class WeatherDAO {
   }
 
   void updateData(String city, Weather weatherData) {
-    databaseReference.child(city).update({
-      'temperature': weatherData.temperature,
-      'description': weatherData.description,
-      'icon': weatherData.weatherIcon,
-    });
+    try {
+      databaseReference.child(city).update({
+        'temperature': weatherData.temperature,
+        'description': weatherData.description,
+        'icon': weatherData.weatherIcon,
+      });
+    } catch (e) {
+      logger.e(e.toString());
+    }
   }
 
   void deleteData(String city) {
-    databaseReference.child(city).remove();
+    try {
+      databaseReference.child(city).remove();
+    } catch (e) {
+      logger.e(e.toString());
+    }
   }
 }
