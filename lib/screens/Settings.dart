@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_application/controls/FontColorController.dart';
 
@@ -65,7 +66,7 @@ class _SettingWidgetState extends State<Setting> {
         },
       ));
 
-  Widget _buildFontColor() => DropdownButton<String>(
+  Widget _buildFontColo() => DropdownButton<String>(
         value: Provider.of<FontColorController>(context, listen: true)
             .stringValue,
         onChanged: (String? value) {
@@ -80,4 +81,20 @@ class _SettingWidgetState extends State<Setting> {
           );
         }).toList(),
       );
+
+  Widget _buildFontColor() => ColorPicker(
+    pickerColor: Provider.of<FontColorController>(context, listen: true)
+        .value,
+        onColorChanged: (color) {},
+    colorPickerWidth: 300.0,
+    pickerAreaHeightPercent: 0.7,
+    enableAlpha: true,
+    displayThumbColor: true,
+    showLabel: true,
+    paletteType: PaletteType.hsv,
+    pickerAreaBorderRadius: const BorderRadius.only(
+      topLeft: Radius.circular(2.0),
+      topRight: Radius.circular(2.0),
+    ),
+  );
 }

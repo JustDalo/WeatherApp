@@ -127,7 +127,7 @@ class _GoogleMapState extends State<GoogleMapPage>
                             citiesList[index].city,
                           ),
                           tileColor: Colors.red,
-                          onTap: () => _goToTheLake(
+                          onTap: () => _goToTheCity(
                               citiesList[index].lat, citiesList[index].lon),
                         ))
                   );
@@ -200,7 +200,7 @@ class _GoogleMapState extends State<GoogleMapPage>
     );
   }
 
-  Future<void> _goToTheLake(double lat, double lon) async {
+  Future<void> _goToTheCity(double lat, double lon) async {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       target: LatLng(lat, lon),

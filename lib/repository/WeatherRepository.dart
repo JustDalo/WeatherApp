@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:weather_application/dao/DAO.dart';
@@ -21,17 +22,32 @@ class WeatherRepository {
 
       for (int i = 0; i < cityObjsJson.length; i++) {
         if (cityObjsJson[i] != null) {
-          cityObj.add(City.fromJson(Map<String, dynamic>.from(cityObjsJson[i])));
+          final myMap = Map<String, dynamic>.from(cityObjsJson[i]);
+          cityObj.add(City.fromJson(myMap));
         }
       }
     });
-
     if (cityObj.isNotEmpty) {
       for (int i = 0; i < cityObj.length; i++) {
         var response = await _helper.get(cityObj[i].name);
         weatherResponse.add(Weather.fromJson(response));
       }
     }
+
+    /*response = await _helper.get("Minsk");
+    weatherResponse.add(Weather.fromJson(response));
+
+    response = await _helper.get("Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch");
+    weatherResponse.add(Weather.fromJson(response));
+
+    response = await _helper.get("Tokyo");
+    weatherResponse.add(Weather.fromJson(response));
+
+    response = await _helper.get("Paris");
+    weatherResponse.add(Weather.fromJson(response));
+
+    response = await _helper.get("Vancouver");
+    weatherResponse.add(Weather.fromJson(response));*/
 
     return weatherResponse;
   }
