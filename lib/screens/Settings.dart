@@ -16,7 +16,6 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingWidgetState extends State<Setting> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +48,7 @@ class _SettingWidgetState extends State<Setting> {
   }
 
   Widget _buildFontSize() => Container(
-    width: double.maxFinite,
+      width: double.maxFinite,
       child: CupertinoSlider(
         value: Provider.of<FontSizeController>(context, listen: true).value,
         max: 20,
@@ -66,35 +65,24 @@ class _SettingWidgetState extends State<Setting> {
         },
       ));
 
-  Widget _buildFontColo() => DropdownButton<String>(
-        value: Provider.of<FontColorController>(context, listen: true)
-            .stringValue,
-        onChanged: (String? value) {
-          Provider.of<FontColorController>(context, listen: false)
-              .changeFontColor(value!);
-        },
-        items: <String>['Black', 'Red']
-            .map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-      );
+
 
   Widget _buildFontColor() => ColorPicker(
-    pickerColor: Provider.of<FontColorController>(context, listen: true)
-        .value,
-        onColorChanged: (color) {},
-    colorPickerWidth: 300.0,
-    pickerAreaHeightPercent: 0.7,
-    enableAlpha: true,
-    displayThumbColor: true,
-    showLabel: true,
-    paletteType: PaletteType.hsv,
-    pickerAreaBorderRadius: const BorderRadius.only(
-      topLeft: Radius.circular(2.0),
-      topRight: Radius.circular(2.0),
-    ),
-  );
+        pickerColor:
+            Provider.of<FontColorController>(context, listen: true).value,
+        onColorChanged: (color) {
+          Provider.of<FontColorController>(context, listen: false)
+              .changeFontColor(color);
+        },
+        colorPickerWidth: 300.0,
+        pickerAreaHeightPercent: 0.7,
+        enableAlpha: true,
+        displayThumbColor: true,
+        showLabel: true,
+        paletteType: PaletteType.hsv,
+        pickerAreaBorderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(2.0),
+          topRight: Radius.circular(2.0),
+        ),
+      );
 }
